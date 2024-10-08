@@ -1,24 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import InputPage from './pages/InputPage';
+import HistoryPage from './pages/HistoryPage';
+import Navbar from './components/Navbar';
 
 function App() {
+  const [transactions, setTransactions] = useState(() => {
+    const savedTransactions = localStorage.getItem('transactions');
+    return savedTransactions ? JSON.parse(savedTransactions) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('transactions', JSON.stringify(transactions));
+  }, [transactions]);
+
+  const addTransaction = (transaction) => {
+    setTransactions((prev) => [...prev, transaction]);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="pb-24 bg-customYellow font-ibm-plex-mono min-h-screen px-0 md:px-14">
+        {' '}
+        {/* Menambahkan padding agar konten tidak tertutupi navbar */}
+        <Routes>
+          <Route path="/" element={<HomePage transactions={transactions} />} />
+          <Route path="/input" element={<InputPage addTransaction={addTransaction} />} />
+          <Route path="/history" element={<HistoryPage transactions={transactions} />} />
+        </Routes>
+      </div>
+      <Navbar /> {/* Navbar di bawah */}
+    </Router>
   );
 }
 
