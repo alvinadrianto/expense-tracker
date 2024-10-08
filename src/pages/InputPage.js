@@ -96,7 +96,7 @@ const InputPage = ({ addTransaction = () => {} }) => {
 
         {/* Submit Button */}
         <div className="flex justify-center">
-          <button type="submit" className={`w-1/6 p-2 ${type === 'income' ? 'bg-blue-500' : 'bg-red-500'} text-white border-2 border-black rounded-lg transition-colors duration-300 ease-in-out`}>
+          <button type="submit" className={`w-1/2 md:w-1/6 p-2 ${type === 'income' ? 'bg-blue-500' : 'bg-red-500'} text-white border-2 border-black rounded-lg transition-colors duration-300 ease-in-out`}>
             Save
           </button>
         </div>
